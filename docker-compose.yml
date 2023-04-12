@@ -1,0 +1,26 @@
+version: '3'
+services: 
+ security-database:
+    container_name: security-database
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USERNAME=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:  
+      - ./postgres/docker-entrypoint-initdb:/docker-entrypoint-initdb.d
+      - pg-data:/var/lib/postgresql/data
+ pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+        PGADMIN_DEFAULT_EMAIL: root@root.com
+        PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+    - 5050:80
+
+volumes:
+  pg-data:
