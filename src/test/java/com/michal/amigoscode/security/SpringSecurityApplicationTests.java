@@ -1,4 +1,4 @@
-package com.michal.amigoscode;
+package com.michal.amigoscode.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

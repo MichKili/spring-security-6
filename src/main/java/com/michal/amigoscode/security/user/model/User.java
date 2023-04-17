@@ -1,4 +1,4 @@
-package com.michal.amigoscode.model;
+package com.michal.amigoscode.security.user.model;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -19,7 +19,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -44,12 +46,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @ElementCollection(targetClass = Role.class)
     @CollectionTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id")})
-    @Column(name = "role")
-    private Collection<Role> roles;
+    private Set<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(e -> new SimpleGrantedAuthority(e.name())).toList();
+        return roles.stream().map(e -> new SimpleGrantedAuthority(e.name())).collect(Collectors.toSet());
     }
 
     @Override
